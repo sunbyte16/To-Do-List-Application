@@ -1,0 +1,21 @@
+{
+  "name": "to-do-list-application",
+  "version": "1.0.0",
+  "description": "Modern To-Do List Application © 2k25 𝕊𝕦𝕟𝕚𝕝 𝕊𝕙𝕒𝕣𝕞𝕒. All rights reserved",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["todo", "nodejs", "express", "modern", "interactive"],
+  "author": "Sunil Sharma <sunbyte16@github.com>",
+  "license": "MIT",
+  "copyright": "© 2k25 𝕊𝕦𝕟𝕚𝕝 𝕊𝕙𝕒𝕣𝕞𝕒. All rights reserved",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "uuid": "^13.0.0"
+  }
+}

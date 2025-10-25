@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<!--
+    Modern To-Do List Application
+    © 2k25 𝕊𝕦𝕟𝕚𝕝 𝕊𝕙𝕒𝕣𝕞𝕒. All rights reserved
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern To-Do List</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/brands.min.css" rel="stylesheet">
+    <link href="/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1><i class="fas fa-tasks"></i> Modern To-Do List</h1>
+            <div class="task-stats">
+                <span class="stat">
+                    <i class="fas fa-list"></i>
+                    Total: <strong><%= taskCount.total %></strong>
+                </span>
+                <span class="stat">
+                    <i class="fas fa-clock"></i>
+                    Active: <strong><%= taskCount.active %></strong>
+                </span>
+                <span class="stat">
+                    <i class="fas fa-check-circle"></i>
+                    Completed: <strong><%= taskCount.completed %></strong>
+                </span>
+            </div>
+        </header>
+
+        <!-- Add Task Form -->
+        <div class="add-task-section">
+            <form action="/add" method="POST" class="add-task-form">
+                <div class="form-row">
+                    <input type="text" name="task" placeholder="What needs to be done?" required class="task-input">
+                    <select name="priority" class="priority-select">
+                        <option value="low">Low Priority</option>
+                        <option value="medium" selected>Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <input type="text" name="category" placeholder="Category (e.g., work, personal)" class="category-input">
+                    <input type="date" name="dueDate" class="date-input">
+                    <button type="submit" class="add-btn">
+                        <i class="fas fa-plus"></i> Add Task
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <div class="filter-group">
+                <label>Filter by Status:</label>
+                <div class="filter-buttons">
+                    <a href="/?filter=all&category=<%= category %>" class="filter-btn <%= filter === 'all' ? 'active' : '' %>">
+                        All (<%= taskCount.total %>)
+                    </a>
+                    <a href="/?filter=active&category=<%= category %>" class="filter-btn <%= filter === 'active' ? 'active' : '' %>">
+                        Active (<%= taskCount.active %>)
+                    </a>
+                    <a href="/?filter=completed&category=<%= category %>" class="filter-btn <%= filter === 'completed' ? 'active' : '' %>">
+                        Completed (<%= taskCount.completed %>)
+                    </a>
+                </div>
+            </div>
+            
+            <div class="filter-group">
+                <label>Filter by Category:</label>
+                <select onchange="window.location.href='/?filter=<%= filter %>&category=' + this.value" class="category-filter">
+                    <option value="all" <%= category === 'all' ? 'selected' : '' %>>All Categories</option>
+                    <% categories.forEach(cat => { %>
+                        <option value="<%= cat %>" <%= category === cat ? 'selected' : '' %>><%= cat %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <% if (taskCount.completed > 0) { %>
+                <form action="/clear-completed" method="POST" class="clear-form">
+                    <button type="submit" class="clear-btn" onclick="return confirm('Clear all completed tasks?')">
+                        <i class="fas fa-trash"></i> Clear Completed
+                    </button>
+                </form>
+            <% } %>
+        </div>
+
+        <!-- Tasks List -->
+        <div class="tasks-container">
+            <% if (tasks.length === 0) { %>
+                <div class="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>No tasks found</h3>
+                    <p>Add a new task above to get started!</p>
+                </div>
+            <% } else { %>
+                <div class="tasks-list">
+                    <% tasks.forEach(task => { %>
+                        <div class="task-item <%= task.completed ? 'completed' : '' %> priority-<%= task.priority %>">
+                            <div class="task-content">
+                                <form action="/toggle/<%= task.id %>" method="POST" class="toggle-form">
+                                    <button type="submit" class="toggle-btn">
+                                        <i class="<%= task.completed ? 'fas fa-check-circle' : 'far fa-circle' %>"></i>
+                                    </button>
+                                </form>
+                                
+                                <div class="task-details">
+                                    <div class="task-text"><%= task.text %></div>
+                                    <div class="task-meta">
+                                        <span class="priority-badge priority-<%= task.priority %>">
+                                            <i class="fas fa-flag"></i> <%= task.priority %>
+                                        </span>
+                                        <span class="category-badge">
+                                            <i class="fas fa-tag"></i> <%= task.category %>
+                                        </span>
+                                        <% if (task.dueDate) { %>
+                                            <span class="due-date">
+                                                <i class="fas fa-calendar"></i> 
+                                                <%= new Date(task.dueDate).toLocaleDateString() %>
+                                            </span>
+                                        <% } %>
+                                        <span class="created-date">
+                                            <i class="fas fa-clock"></i> 
+                                            <%= new Date(task.createdAt).toLocaleDateString() %>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="task-actions">
+                                <button onclick="editTask('<%= task.id %>', '<%= task.text %>', '<%= task.priority %>', '<%= task.category %>', '<%= task.dueDate %>')" class="edit-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <form action="/delete/<%= task.id %>" method="POST" class="delete-form">
+                                    <button type="submit" class="delete-btn" onclick="return confirm('Delete this task?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Edit Task Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Edit Task</h3>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <form id="editForm" method="POST" class="edit-form">
+                <div class="form-group">
+                    <label>Task:</label>
+                    <input type="text" id="editTaskText" name="task" required>
+                </div>
+                <div class="form-group">
+                    <label>Priority:</label>
+                    <select id="editPriority" name="priority">
+                        <option value="low">Low Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Category:</label>
+                    <input type="text" id="editCategory" name="category">
+                </div>
+                <div class="form-group">
+                    <label>Due Date:</label>
+                    <input type="date" id="editDueDate" name="dueDate">
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="closeEditModal()" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p>© 2k25 𝕊𝕦𝕟𝕚𝕝 𝕊𝕙𝕒𝕣𝕞𝕒. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="https://github.com/sunbyte16" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/sunil-kumar-bb88bb31a/" target="_blank" rel="noopener">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://lively-dodol-cc397c.netlify.app" target="_blank" rel="noopener">
+                    <i class="fas fa-globe"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>
