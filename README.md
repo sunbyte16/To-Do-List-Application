@@ -128,6 +128,7 @@ npm outdated
 </div>
 
 #### **🚀 Ready to Use Features:**
+
 - **☁️ Cloud Database**: MongoDB Atlas cluster pre-configured
 - **🔄 Auto-Fallback**: Switches to in-memory storage if database unavailable
 - **📊 Real-time Stats**: Advanced analytics and task insights
@@ -135,23 +136,27 @@ npm outdated
 - **🌍 Global**: Access your tasks from anywhere
 
 #### **🔧 Database Configuration:**
+
 The application is pre-configured with MongoDB Atlas:
+
 ```env
 # Already configured in .env file
 MONGODB_URI=mongodb+srv://cluster0.wttyk0w.mongodb.net/modern-todo
 ```
 
 #### **📈 Database Features:**
-| Feature | Description | Status |
-|---------|-------------|--------|
-| **Persistent Storage** | Tasks survive server restarts | ✅ Active |
-| **Cloud Sync** | Access tasks from any deployment | ✅ Active |
-| **Advanced Queries** | Fast filtering and searching | ✅ Active |
-| **Real-time Analytics** | Task completion statistics | ✅ Active |
-| **Automatic Backups** | MongoDB Atlas built-in backups | ✅ Active |
-| **Fallback Mode** | In-memory storage if DB unavailable | ✅ Active |
+
+| Feature                 | Description                         | Status    |
+| ----------------------- | ----------------------------------- | --------- |
+| **Persistent Storage**  | Tasks survive server restarts       | ✅ Active |
+| **Cloud Sync**          | Access tasks from any deployment    | ✅ Active |
+| **Advanced Queries**    | Fast filtering and searching        | ✅ Active |
+| **Real-time Analytics** | Task completion statistics          | ✅ Active |
+| **Automatic Backups**   | MongoDB Atlas built-in backups      | ✅ Active |
+| **Fallback Mode**       | In-memory storage if DB unavailable | ✅ Active |
 
 #### **🛠️ Additional Setup (Optional):**
+
 - **Local Development**: See [MONGODB_SETUP.md](MONGODB_SETUP.md) for local MongoDB setup
 - **Custom Database**: Update `.env` file with your own MongoDB URI
 - **Production Deploy**: Environment variables automatically handled
@@ -305,16 +310,17 @@ graph TD
 
 ### 📋 **Two Deployment Versions:**
 
-| Version | Technology | Database | Best For |
-|---------|------------|----------|----------|
+| Version             | Technology         | Database             | Best For                       |
+| ------------------- | ------------------ | -------------------- | ------------------------------ |
 | **🌐 GitHub Pages** | Static HTML/CSS/JS | Browser LocalStorage | Quick demo, portfolio showcase |
-| **🚀 Full Server** | Node.js + Express | MongoDB Atlas | Production, full features |
+| **🚀 Full Server**  | Node.js + Express  | MongoDB Atlas        | Production, full features      |
 
 ### 🌐 **Option 1: GitHub Pages (Static Version)**
 
 **✅ Already Deployed!** Visit: `https://sunbyte16.github.io/To-Do-List-Application`
 
 **Features:**
+
 - ✅ **Instant Deploy**: Works immediately on GitHub Pages
 - ✅ **Browser Storage**: Uses localStorage for data persistence
 - ✅ **Full UI**: Complete modern interface with all styling
@@ -322,6 +328,7 @@ graph TD
 - ✅ **Fast Loading**: Optimized static files
 
 **How it works:**
+
 - Uses `index.html` at repository root
 - Data stored in browser's localStorage
 - All features work except server-side MongoDB integration
@@ -331,6 +338,7 @@ graph TD
 **For Production Apps:** Deploy the Node.js server version for full features
 
 **MongoDB Atlas Advantages:**
+
 - **✅ No Database Setup**: MongoDB Atlas handles all database infrastructure
 - **✅ Global Access**: Database accessible from any deployment platform
 - **✅ Auto-Scaling**: MongoDB Atlas scales automatically with your app
@@ -339,6 +347,7 @@ graph TD
 ### 🚀 **Server Deployment Options**
 
 #### **Railway (Recommended for Node.js)**
+
 ```bash
 # Install Railway CLI
 npm install -g @railway/cli
@@ -350,6 +359,7 @@ railway up
 ```
 
 #### **Render**
+
 1. Connect your GitHub repository to Render
 2. Choose "Web Service"
 3. Build Command: `npm install`
@@ -357,6 +367,7 @@ railway up
 5. Environment Variables: Automatically detected from `.env`
 
 #### **Heroku**
+
 ```bash
 # Install Heroku CLI and login
 heroku create your-app-name
@@ -364,6 +375,7 @@ git push heroku main
 ```
 
 ### 🔧 **Environment Variables for Production**
+
 The application automatically uses the MongoDB Atlas connection from your `.env` file. For production:
 
 ```env
@@ -373,6 +385,7 @@ MONGODB_URI=mongodb+srv://cluster0.wttyk0w.mongodb.net/modern-todo
 ```
 
 ### 📊 **Production Features**
+
 - **🔄 Auto-Fallback**: If MongoDB Atlas is temporarily unavailable, switches to in-memory storage
 - **📈 Performance**: Optimized queries with MongoDB indexes
 - **🔒 Security**: Environment-based configuration keeps credentials secure
