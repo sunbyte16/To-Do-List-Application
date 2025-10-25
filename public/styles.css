@@ -1,5 +1,5 @@
 /*
- * Modern To-Do List Application - Styles
+ * Modern To-Do List Application - Static Styles
  * © 2k25 𝕊𝕦𝕟𝕚𝕝 𝕊𝕙𝕒𝕣𝕞𝕒. All rights reserved
  */
 
@@ -38,6 +38,33 @@ body {
     font-size: 2.5rem;
     margin-bottom: 15px;
     font-weight: 300;
+}
+
+.db-status {
+    margin-bottom: 15px;
+}
+
+.db-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.db-indicator.connected {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.3);
+}
+
+.db-indicator.fallback {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, 0.3);
 }
 
 .task-stats {
@@ -155,6 +182,8 @@ body {
     border-radius: 20px;
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    background: white;
+    cursor: pointer;
 }
 
 .filter-btn:hover, .filter-btn.active {

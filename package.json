@@ -5,17 +5,34 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'No build step required'",
+    "seed": "node -e \"require('./config/database').connectDB().then(() => { const Task = require('./models/Task'); return Task.create({ text: 'Welcome to MongoDB!', priority: 'medium', category: 'general' }); }).then(() => process.exit(0)).catch(console.error)\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["todo", "nodejs", "express", "modern", "interactive"],
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "keywords": [
+    "todo",
+    "nodejs",
+    "express",
+    "modern",
+    "interactive"
+  ],
   "author": "Sunil Sharma <sunbyte16@github.com>",
   "license": "MIT",
   "copyright": "© 2k25 𝕊𝕦𝕟𝕚𝕝 𝕊𝕙𝕒𝕣𝕞𝕒. All rights reserved",
   "dependencies": {
     "body-parser": "^2.2.0",
+    "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "mongoose": "^8.19.2",
     "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
